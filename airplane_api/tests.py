@@ -1,6 +1,9 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from .models import Airplane
+from django.urls import reverse
+from rest_framework.test import APITestCase
+
 
 # Create your tests here.
 class AirplanesTests(TestCase):
@@ -19,3 +22,8 @@ class AirplanesTests(TestCase):
         self.assertEqual(expected_author, 'testuser1')
         self.assertEqual(expected_airplanetype, 'airbus')
         self.assertEqual(expected_description, '380a')
+
+class APITest(APITestCase):
+        def test_auth_list(self):
+            response = self.client.get(reverse('airplane_list'))
+            self.assertEqual(response.status_code, 401)
